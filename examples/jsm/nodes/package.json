@@ -1,0 +1,17 @@
+{
+	"sideEffects": [
+		"accessors/*.js",
+		"code/*.js",
+		"core/*.js",
+		"display/*.js",
+		"fog/*.js",
+		"geometry/*.js",
+		"gpgpu/*.js",
+		"lighting/*.js",
+		"materials/*.js",
+		"math/*.js",
+		"procedural/*.js",
+		"shadernode/*.js",
+		"utils/*.js"
+	]
+}
