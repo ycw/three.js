@@ -1,5 +1,5 @@
 import DataMap from '../../common/DataMap.js';
-import { GPUTextureViewDimension, GPUIndexFormat, GPUFilterMode, GPUPrimitiveTopology, GPULoadOp, GPUStoreOp } from './WebGPUConstants.js';
+import { GPUTextureViewDimension, GPUFilterMode, GPUPrimitiveTopology, GPULoadOp, GPUStoreOp } from './WebGPUConstants.js';
 
 /**
  * A WebGPU backend utility module used by {@link WebGPUTextureUtils}.
@@ -35,18 +35,16 @@ fn main( @builtin( vertex_index ) vertexIndex : u32 ) -> VarysStruct {
 
 	var Varys : VarysStruct;
 
-	var pos = array< vec2<f32>, 4 >(
-		vec2<f32>( -1.0,  1.0 ),
-		vec2<f32>(  1.0,  1.0 ),
-		vec2<f32>( -1.0, -1.0 ),
-		vec2<f32>(  1.0, -1.0 )
+	var pos = array< vec2<f32>, 3 >(
+		vec2<f32>( - 1.0, 3.0 ),
+		vec2<f32>( - 1.0, - 1.0 ),
+		vec2<f32>( 3.0, - 1.0 )
 	);
 
-	var tex = array< vec2<f32>, 4 >(
-		vec2<f32>( 0.0, 0.0 ),
-		vec2<f32>( 1.0, 0.0 ),
+	var tex = array< vec2<f32>, 3 >(
+		vec2<f32>( 0.0, - 1.0 ),
 		vec2<f32>( 0.0, 1.0 ),
-		vec2<f32>( 1.0, 1.0 )
+		vec2<f32>( 2.0, 1.0 )
 	);
 
 	Varys.vTex = tex[ vertexIndex ];
@@ -174,8 +172,7 @@ fn main( @location( 0 ) vTex : vec2<f32> ) -> @location( 0 ) vec4<f32> {
 					targets: [ { format } ]
 				},
 				primitive: {
-					topology: GPUPrimitiveTopology.TriangleStrip,
-					stripIndexFormat: GPUIndexFormat.Uint32
+					topology: GPUPrimitiveTopology.TriangleList,
 				},
 				layout: 'auto'
 			} );
@@ -213,8 +210,7 @@ fn main( @location( 0 ) vTex : vec2<f32> ) -> @location( 0 ) vec4<f32> {
 					targets: [ { format } ]
 				},
 				primitive: {
-					topology: GPUPrimitiveTopology.TriangleStrip,
-					stripIndexFormat: GPUIndexFormat.Uint32
+					topology: GPUPrimitiveTopology.TriangleList,
 				},
 				layout: 'auto'
 			} );
@@ -290,7 +286,7 @@ fn main( @location( 0 ) vTex : vec2<f32> ) -> @location( 0 ) vec4<f32> {
 
 			passEncoder.setPipeline( pipeline );
 			passEncoder.setBindGroup( 0, bindGroup );
-			passEncoder.draw( 4, 1, 0, 0 );
+			passEncoder.draw( 3, 1, 0, 0 );
 			passEncoder.end();
 
 		};
@@ -395,7 +391,7 @@ fn main( @location( 0 ) vTex : vec2<f32> ) -> @location( 0 ) vec4<f32> {
 
 			passEncoder.setPipeline( pipeline );
 			passEncoder.setBindGroup( 0, bindGroup );
-			passEncoder.draw( 4, 1, 0, 0 );
+			passEncoder.draw( 3, 1, 0, 0 );
 
 			passes.push( {
 				renderBundles: [ passEncoder.finish() ],
